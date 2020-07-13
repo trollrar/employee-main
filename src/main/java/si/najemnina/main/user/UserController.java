@@ -1,5 +1,6 @@
 package si.najemnina.main.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,8 +10,8 @@ import java.util.List;
 public class UserController {
 
     // standard constructors
-
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/users")
     public List<UserModel> getUsers() {

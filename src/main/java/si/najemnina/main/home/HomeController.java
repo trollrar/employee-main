@@ -1,19 +1,13 @@
 package si.najemnina.main.home;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
 
-    @Value("${spring.application.name}")
-    String appName;
-
     @GetMapping("/")
-    public String homePage(Model model) {
-        model.addAttribute("appName", appName);
+    public String homePage() {
         return "home";
     }
 
