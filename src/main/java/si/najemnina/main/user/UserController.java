@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @Api(value="Main API", description="Operations pertaining to EVERYTHING")
-@RequestMapping("/api")
+@RequestMapping("api")
 public class UserController {
 
     // standard constructors
