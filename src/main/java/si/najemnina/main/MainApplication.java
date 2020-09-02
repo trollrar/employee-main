@@ -4,8 +4,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import si.najemnina.main.user.UserModel;
-import si.najemnina.main.user.UserRepository;
+import si.najemnina.main.auth.User;
+import si.najemnina.main.auth.UserRepository;
 
 import java.util.stream.Stream;
 
@@ -20,7 +20,7 @@ public class MainApplication {
 	CommandLineRunner init(UserRepository userRepository) {
 		return args -> {
 			Stream.of("John", "Julie", "Jennifer", "Helen", "Rachel").forEach(name -> {
-				UserModel user = new UserModel();
+				User user = new User();
 				user.name = name;
 				user.email = name.toLowerCase() + "@domain.com";
 				userRepository.save(user);
