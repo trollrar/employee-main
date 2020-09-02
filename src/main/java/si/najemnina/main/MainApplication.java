@@ -20,7 +20,9 @@ public class MainApplication {
 	CommandLineRunner init(UserRepository userRepository) {
 		return args -> {
 			Stream.of("John", "Julie", "Jennifer", "Helen", "Rachel").forEach(name -> {
-				UserModel user = new UserModel(name, name.toLowerCase() + "@domain.com");
+				UserModel user = new UserModel();
+				user.name = name;
+				user.email = name.toLowerCase() + "@domain.com";
 				userRepository.save(user);
 			});
 			userRepository.findAll().forEach(System.out::println);

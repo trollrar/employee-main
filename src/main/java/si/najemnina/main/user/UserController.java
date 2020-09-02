@@ -1,12 +1,14 @@
 package si.najemnina.main.user;
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@Api(value="Main API", description="Operations pertaining to EVERYTHING")
+@RequestMapping("/api")
 public class UserController {
 
     // standard constructors
