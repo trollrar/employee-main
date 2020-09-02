@@ -24,7 +24,7 @@ public class User {
         USER, ADMIN
     }
 
-    User() {
+    public User() {
         role = Role.USER;
     }
 }

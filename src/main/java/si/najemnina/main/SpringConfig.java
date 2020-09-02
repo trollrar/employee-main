@@ -16,7 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class SpringFoxConfig {
+public class SpringConfig {
     @Bean
     public Docket api() {
 
@@ -43,9 +43,8 @@ public class SpringFoxConfig {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://domain2.com");
+                registry.addMapping("/**").allowedOrigins("http://localhost:4200");
             }
         };
     }
-
 }
