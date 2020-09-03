@@ -21,8 +21,9 @@ public class MainApplication {
 		return args -> {
 			Stream.of("John", "Julie", "Jennifer", "Helen", "Rachel").forEach(name -> {
 				User user = new User();
-				user.name = name;
+				user.username = name;
 				user.email = name.toLowerCase() + "@domain.com";
+				user.password = "pass";
 				userRepository.save(user);
 			});
 			userRepository.findAll().forEach(System.out::println);
