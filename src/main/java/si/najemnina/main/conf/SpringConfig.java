@@ -1,5 +1,6 @@
 package si.najemnina.main.conf;
 
+import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,26 +32,16 @@ public class SpringConfig {
     public static final String DEFAULT_INCLUDE_PATTERN = "/api/.*";
 
     @Bean
-    public Docket api() {
-        Docket docket = new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiEndPointsInfo())
-                .pathMapping("/")
-                .apiInfo(ApiInfo.DEFAULT)
-                .forCodeGeneration(true)
-                .genericModelSubstitutes(ResponseEntity.class)
-                .ignoredParameterTypes(Pageable.class)
-                .ignoredParameterTypes(java.sql.Date.class)
-                .directModelSubstitute(java.time.LocalDate.class, java.sql.Date.class)
-                .directModelSubstitute(java.time.ZonedDateTime.class, Date.class)
-                .directModelSubstitute(java.time.LocalDateTime.class, Date.class)
-                .securityContexts(Lists.newArrayList(securityContext()))
-                .securitySchemes(Lists.newArrayList(apiKey()))
-                .useDefaultResponseMessages(false);
-
-                docket = docket.select()
+    Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
                 .paths(regex(DEFAULT_INCLUDE_PATTERN))
-                .build();
-        return docket;
+                .apis(RequestHandlerSelectors.any())
+                .paths(Predicates.not(PathSelectors.regex("/error.*")))
+                .build()
+                .apiInfo(apiEndPointsInfo())
+                .securityContexts(Lists.newArrayList(securityContext()))
+                .securitySchemes(Lists.newArrayList(apiKey()));
     }
 
 
@@ -75,12 +66,9 @@ public class SpringConfig {
     }
 
     private ApiInfo apiEndPointsInfo() {
-
         return new ApiInfoBuilder().title("Spring Boot REST API")
-                .description("Main REST API")
+                .description("Main rest api")
                 .contact(new Contact("Fares Vladimir Villca Šeme", "eavto.eu", "vladimirseme@gmail.com"))
-                .license("Apache 2.0")
-                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .version("1.0-SNAPSHOT")
                 .build();
     }
