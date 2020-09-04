@@ -1,4 +1,4 @@
-package si.najemnina.main.auth;
+package si.najemnina.main.api.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;

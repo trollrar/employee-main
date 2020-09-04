@@ -1,11 +1,11 @@
-package si.najemnina.main.auth.jwt;
+package si.najemnina.main.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import si.najemnina.main.auth.User;
+import si.najemnina.main.api.user.User;
 
 import java.util.Date;
 import java.util.HashMap;

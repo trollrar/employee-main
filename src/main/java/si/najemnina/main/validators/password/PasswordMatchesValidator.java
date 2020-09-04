@@ -1,6 +1,6 @@
 package si.najemnina.main.validators.password;
 
-import si.najemnina.main.auth.dto.UserLoginDTO;
+import si.najemnina.main.api.user.dto.UserLoginDTO;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

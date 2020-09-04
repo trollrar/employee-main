@@ -1,10 +1,10 @@
-package si.najemnina.main.auth;
+package si.najemnina.main.api.user;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-import si.najemnina.main.auth.dto.UserDTO;
-import si.najemnina.main.auth.dto.UserLoginDTO;
-import si.najemnina.main.auth.dto.UserRegisterDTO;
+import si.najemnina.main.api.user.dto.UserDTO;
+import si.najemnina.main.api.user.dto.UserLoginDTO;
+import si.najemnina.main.api.user.dto.UserRegisterDTO;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {

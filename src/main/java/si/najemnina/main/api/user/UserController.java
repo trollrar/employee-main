@@ -1,22 +1,20 @@
-package si.najemnina.main.auth;
+package si.najemnina.main.api.user;
 
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import si.najemnina.main.auth.dto.UserDTO;
-import si.najemnina.main.auth.dto.UserLoginDTO;
-import si.najemnina.main.auth.dto.UserRegisterDTO;
-import si.najemnina.main.auth.jwt.JwtTokenDTO;
-import si.najemnina.main.auth.jwt.JwtUtil;
+import si.najemnina.main.api.user.dto.UserDTO;
+import si.najemnina.main.api.user.dto.UserLoginDTO;
+import si.najemnina.main.api.user.dto.UserRegisterDTO;
+import si.najemnina.main.api.user.dto.UserJwtDTO;
+import si.najemnina.main.jwt.JwtUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -24,7 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @Api(value = "Main API", description = "Operations pertaining to EVERYTHING")
-@RequestMapping("/api")
+@RequestMapping("api")
 public class UserController {
 
     @Autowired
@@ -60,9 +58,8 @@ public class UserController {
     @GetMapping("/admin")
     public String amIAdmin(HttpServletRequest request) {
 
-        //Checkcs if its admin returns no way if it is
-        // check https://developer.okta.com/blog/2019/06/20/spring-preauthorize
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        auth.getName();
         if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
             return "no way";
         }
@@ -78,7 +75,7 @@ public class UserController {
     }
 
     @PostMapping("public/login")
-    public ResponseEntity<JwtTokenDTO> login(@RequestBody UserLoginDTO dto) throws Exception {
+    public ResponseEntity<UserJwtDTO> login(@RequestBody UserLoginDTO dto) throws Exception {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(dto.username, dto.password)
@@ -91,6 +88,6 @@ public class UserController {
 
         String token = jwtUtil.generateToken(user);
 
-        return ResponseEntity.ok(new JwtTokenDTO(token));
+        return ResponseEntity.ok(new UserJwtDTO(token));
     }
 }

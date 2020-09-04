@@ -1,10 +1,11 @@
-package si.najemnina.main.conf;
+package si.najemnina.main.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 
+// This configuration class is needed for @PreAuthorization() annotation to work
 @Configuration
 @EnableGlobalMethodSecurity(
   prePostEnabled = true, 

@@ -1,4 +1,4 @@
-package si.najemnina.main.auth;
+package si.najemnina.main.api.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

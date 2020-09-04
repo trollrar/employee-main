@@ -1,4 +1,4 @@
-package si.najemnina.main.auth.dto;
+package si.najemnina.main.api.user.dto;
 
 import si.najemnina.main.validators.email.ValidEmail;
 

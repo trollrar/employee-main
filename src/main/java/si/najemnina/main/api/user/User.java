@@ -1,4 +1,4 @@
-package si.najemnina.main.auth;
+package si.najemnina.main.api.user;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +26,7 @@ public class User implements UserDetails {
 
     public Role role;
 
-    public enum Role implements GrantedAuthority{
+    public enum Role implements GrantedAuthority {
         USER, ADMIN;
 
         @Override
