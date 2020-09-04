@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import si.najemnina.main.auth.User;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -16,9 +17,11 @@ public class JwtUtil {
     private static final String SECRET_KEY = "FaressVerySecretKey";
     private static final int EXPIRATION_TIME = 1000 * 60 * 60 * 24;
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userDetails.getUsername());
+        claims.put("userId", user.id + "");
+        claims.put("role", user.role);
+        return createToken(claims, user.getUsername());
     }
 
     private String createToken(Map<String, Object> claims, String username) {
@@ -53,5 +56,11 @@ public class JwtUtil {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public String extractUserId(String token) {
+        return (String) extractClaim(token, claims -> claims.get("userId"));
+    }
 
+    public String extractRole(String token) {
+        return (String) extractClaim(token, claims -> claims.get("role"));
+    }
 }

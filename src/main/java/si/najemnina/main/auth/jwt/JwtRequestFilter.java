@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import si.najemnina.main.auth.User;
+import si.najemnina.main.auth.UserService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -22,7 +24,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     JwtUtil jwtUtil;
 
     @Autowired
-    UserDetailsService userDetailsService;
+    UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
@@ -38,11 +40,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            if(jwtUtil.validateToken(jwt, userDetails)) {
+            User user = this.userService.loadUserByUsername(username);
+            if(jwtUtil.validateToken(jwt, user)) {
 
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()
+                        user, null, user.getAuthorities()
                 );
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);

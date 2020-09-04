@@ -19,11 +19,12 @@ public class MainApplication {
 	@Bean
 	CommandLineRunner init(UserRepository userRepository) {
 		return args -> {
-			Stream.of("John", "Julie", "Jennifer", "Helen", "Rachel").forEach(name -> {
+			Stream.of("admin", "user").forEach(name -> {
 				User user = new User();
 				user.username = name;
 				user.email = name.toLowerCase() + "@domain.com";
-				user.password = "pass";
+				user.password = name;
+				user.role = name.equals("admin") ? User.Role.ADMIN : User.Role.USER;
 				userRepository.save(user);
 			});
 			userRepository.findAll().forEach(System.out::println);
