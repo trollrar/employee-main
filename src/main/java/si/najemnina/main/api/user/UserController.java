@@ -84,6 +84,6 @@ public class UserController {
 
         String token = jwtUtil.generateToken(user);
 
-        return ResponseEntity.ok(new UserJwtDTO(token));
+        return ResponseEntity.ok(new UserJwtDTO(token, userMapper.toDTO(user)));
     }
 }
