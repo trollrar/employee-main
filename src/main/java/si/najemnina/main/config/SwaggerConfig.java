@@ -3,10 +3,13 @@ package si.najemnina.main.config;
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import springfox.documentation.PathProvider;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
@@ -22,14 +25,14 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @EnableSwagger2
 public class SwaggerConfig {
     public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String DEFAULT_INCLUDE_PATTERN = "/api/.*";
+    public static final String API_PACKAGE = "si.najemnina.main.api";
 
     @Bean
     Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .paths(regex(DEFAULT_INCLUDE_PATTERN))
-                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage(API_PACKAGE))
                 .build()
                 .apiInfo(apiEndPointsInfo())
                 .securityContexts(Lists.newArrayList(securityContext()))
@@ -44,7 +47,7 @@ public class SwaggerConfig {
     private SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                .forPaths(regex(DEFAULT_INCLUDE_PATTERN))
+                .forPaths(PathSelectors.any())
                 .build();
     }
 
@@ -63,16 +66,5 @@ public class SwaggerConfig {
                 .contact(new Contact("Fares Vladimir Villca Šeme", "eavto.eu", "vladimirseme@gmail.com"))
                 .version("1.0-SNAPSHOT")
                 .build();
-    }
-
-    // Enables requests from webapp
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:4200");
-            }
-        };
     }
 }

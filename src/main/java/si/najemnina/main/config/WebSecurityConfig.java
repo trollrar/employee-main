@@ -26,7 +26,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtRequestFilter jwtRequestFilter;
 
     private final String[] PUBLIC_PATHS = {
-            "/api/public/**"
+            "/public/**",
+            "/login",
+            "/register"
     };
 
     private final String[] SWAGGER_PATHS = {
@@ -46,6 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .cors()
+                .and()
                 .csrf()
                 .disable()
                 .authorizeRequests()
@@ -56,7 +60,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@Api(value = "Main API", description = "Operations pertaining to EVERYTHING")
-@RequestMapping("api")
 public class UserController {
 
     @Autowired
@@ -41,8 +39,8 @@ public class UserController {
     private AuthenticationManager authenticationManager;
 
     @GetMapping("/users")
-    public List<UserDTO> getUsers() {
-        return userRepository.findAll().stream().map(user -> userMapper.toDTO(user)).collect(Collectors.toList());
+    public ResponseEntity<List<UserDTO>> getUsers() {
+        return ResponseEntity.ok(userRepository.findAll().stream().map(user -> userMapper.toDTO(user)).collect(Collectors.toList()));
     }
 
     @GetMapping("public/become")
@@ -57,24 +55,22 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/admin")
     public String amIAdmin(HttpServletRequest request) {
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         auth.getName();
-        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
-            return "no way";
-        }
+
         return "Congratz! you are admin";
     }
 
-    @PostMapping("public/register")
-    public void register(@RequestBody UserRegisterDTO dto) {
+    @PostMapping("register")
+    public String register(@RequestBody UserRegisterDTO dto) {
         User user = new User();
         userMapper.update(user, dto);
 
         userRepository.save(user);
+        return "";
     }
 
-    @PostMapping("public/login")
+    @PostMapping("login")
     public ResponseEntity<UserJwtDTO> login(@RequestBody UserLoginDTO dto) throws Exception {
         try {
             authenticationManager.authenticate(
