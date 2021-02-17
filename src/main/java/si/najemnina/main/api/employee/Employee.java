@@ -1,10 +1,11 @@
 package si.najemnina.main.api.employee;
+import si.najemnina.main.api.user.User;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 
 @Entity
-@Table(name = "employee")
 public class Employee {
 
     @Id
@@ -18,11 +19,10 @@ public class Employee {
     public String lastName;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
     public Employee supervisor;
 
-    @OneToMany(mappedBy = "employee")
-    private Collection<Employee> supervisingEmployees;
+    @OneToMany(mappedBy = "supervisor", fetch = FetchType.LAZY)
+    private Collection<Employee> employees;
 
     public Date creationDate;
 
