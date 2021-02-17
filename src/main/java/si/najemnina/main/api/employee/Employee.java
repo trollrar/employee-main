@@ -22,8 +22,9 @@ public class Employee {
     public Employee supervisor;
 
     @OneToMany(mappedBy = "supervisor", fetch = FetchType.LAZY)
-    private Collection<Employee> employees;
+    public Collection<Employee> employees;
 
+    @Column(nullable = false)
     public Date creationDate;
 
     @Column(nullable = false)
