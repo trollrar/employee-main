@@ -10,6 +10,7 @@ import si.employee.main.api.employee.dto.EmployeeSupervisorSetDTO;
 import si.employee.main.api.employee.dto.EmployeeUpdateDTO;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +38,13 @@ public class EmployeeController {
     }
 
     @GetMapping("{id}")
+    @Transactional
     public ResponseEntity<EmployeeDTO> getEmployee(HttpServletRequest request, @PathVariable("id") Long id) {
+        Employee supervisor = employeeRepository.findById(id).get();
+        employeeRepository.findAllBySupervisor(supervisor).stream().forEach(employee -> {
+            employee.supervisor = null;
+            employeeRepository.save(employee);
+        });
         return ResponseEntity.ok(employeeMapper.toDTO(employeeRepository.findById(id).get()));
     }
 
