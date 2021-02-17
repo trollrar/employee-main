@@ -30,6 +30,12 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeRepository.findAll().stream().map(employee -> employeeMapper.toDTO(employee)).collect(Collectors.toList()));
     }
 
+    @GetMapping("supervised/{id}")
+    public ResponseEntity<List<EmployeeDTO>> getSupervisedEmployees(HttpServletRequest request, @PathVariable("id") Long id) {
+        Employee supervisor = employeeRepository.findById(id).get();
+        return ResponseEntity.ok(employeeRepository.findAllBySupervisor(supervisor).stream().map(employee -> employeeMapper.toDTO(employee)).collect(Collectors.toList()));
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<EmployeeDTO> getEmployee(HttpServletRequest request, @PathVariable("id") Long id) {
         return ResponseEntity.ok(employeeMapper.toDTO(employeeRepository.findById(id).get()));

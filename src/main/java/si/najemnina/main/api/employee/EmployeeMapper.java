@@ -12,11 +12,11 @@ import si.najemnina.main.api.employee.dto.EmployeeUpdateDTO;
 public interface EmployeeMapper {
     EmployeeDTO toDTO(Employee employee);
 
-    @Mapping(target = "supervisorId", ignore = true)
+    @Mapping(target = "supervisor", ignore = true)
     void update(@MappingTarget Employee employee, EmployeeUpdateDTO dto);
-    @Mapping(target = "supervisorId", ignore = true)
+    @Mapping(target = "supervisor", ignore = true)
     void update(@MappingTarget Employee employee, EmployeeCreateDTO dto);
-    @Mapping(target = "supervisorId", ignore = true)
+    @Mapping(target = "supervisor", ignore = true)
     void update(@MappingTarget Employee employee, EmployeeSupervisorSetDTO dto);
 
 }

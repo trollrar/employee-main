@@ -13,9 +13,7 @@ public class EmployeeDTO {
 
     public String lastName;
 
-    public Employee supervisor;
-
-    public Collection<Employee> employees;
+    public EmployeeDTO supervisor;
 
     public Date creationDate;
 

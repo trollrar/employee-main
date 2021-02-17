@@ -18,7 +18,7 @@ public class Employee {
     @Column(nullable = false)
     public String lastName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     public Employee supervisor;
 
     @OneToMany(mappedBy = "supervisor", fetch = FetchType.LAZY)
