@@ -41,7 +41,7 @@ public class EmployeeController {
     @Transactional
     public ResponseEntity<EmployeeDTO> getEmployee(HttpServletRequest request, @PathVariable("id") Long id) {
         Employee supervisor = employeeRepository.findById(id).get();
-        employeeRepository.findAllBySupervisor(supervisor).stream().forEach(employee -> {
+        employeeRepository.findAllBySupervisor(supervisor).forEach(employee -> {
             employee.supervisor = null;
             employeeRepository.save(employee);
         });
