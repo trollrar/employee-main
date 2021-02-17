@@ -35,6 +35,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeMapper.toDTO(employeeRepository.findById(id).get()));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("{id}")
     public void deleteEmployee(HttpServletRequest request, @PathVariable("id") Long id) {
         employeeRepository.deleteById(id);
@@ -46,6 +47,13 @@ public class EmployeeController {
         Employee employee = new Employee();
         employeeMapper.update(employee, dto);
         employee.creationDate = new Date(System.currentTimeMillis());
+
+        if (dto.supervisorId == null) {
+            employee.supervisor = null;
+        } else {
+            Employee supervisor = employeeRepository.findById(dto.supervisorId).get();
+            employee.supervisor = supervisor;
+        }
 
         employeeRepository.save(employee);
         return ResponseEntity.ok(employeeMapper.toDTO(employee));
@@ -59,6 +67,12 @@ public class EmployeeController {
         Employee employee = optional.get();
 
         employeeMapper.update(employee, dto);
+        if (dto.supervisorId == null) {
+            employee.supervisor = null;
+        } else {
+            Employee supervisor = employeeRepository.findById(dto.supervisorId).get();
+            employee.supervisor = supervisor;
+        }
 
         employeeRepository.save(employee);
         return ResponseEntity.ok(employeeMapper.toDTO(employee));
@@ -72,6 +86,13 @@ public class EmployeeController {
         Employee employee = optional.get();
 
         employeeMapper.update(employee, dto);
+
+        if (dto.supervisorId == null) {
+            employee.supervisor = null;
+        } else {
+            Employee supervisor = employeeRepository.findById(dto.supervisorId).get();
+            employee.supervisor = supervisor;
+        }
 
         employeeRepository.save(employee);
         return ResponseEntity.ok(employeeMapper.toDTO(employee));

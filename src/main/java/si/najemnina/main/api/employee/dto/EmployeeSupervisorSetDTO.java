@@ -5,5 +5,5 @@ import si.najemnina.main.api.employee.Employee;
 public class EmployeeSupervisorSetDTO {
     public Long id;
 
-    public Employee supervisor;
+    public Long supervisorId;
 }

@@ -10,7 +10,7 @@ public class EmployeeUpdateDTO {
 
         public String lastName;
 
-        public Employee supervisor;
+        public Long supervisorId;
 
         public Employee.Position position;
 }

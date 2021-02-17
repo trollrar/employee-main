@@ -9,7 +9,7 @@ public class EmployeeCreateDTO {
 
         public String lastName;
 
-        public Employee supervisor;
+        public Long supervisorId;
 
         public Employee.Position position;
 }
