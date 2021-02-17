@@ -1,5 +1,6 @@
 package si.najemnina.main.api.employee;
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -8,7 +9,7 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public long id;
+    public Long id;
 
     @Column(nullable = false)
     public String firstName;
@@ -16,13 +17,19 @@ public class Employee {
     @Column(nullable = false)
     public String lastName;
 
-    public Employee employee;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    public Employee supervisor;
+
+    @OneToMany(mappedBy = "employee")
+    private Collection<Employee> supervisingEmployees;
 
     public Date creationDate;
 
+    @Column(nullable = false)
     public Position position;
 
     public enum Position {
-        JUNIOR, MIDDLE, SENIOR, DIRECTOR
+        OTHER, OFFICE, CUSTOMER_SERVICE, MANAGEMENT
     }
 }

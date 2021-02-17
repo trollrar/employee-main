@@ -6,7 +6,7 @@ import si.najemnina.main.api.user.User;
 import java.util.Collection;
 
 public class UserDTO {
-    public long id;
+    public Long id;
 
     public String username;
 
