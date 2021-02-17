@@ -38,19 +38,19 @@ public class EmployeeController {
     }
 
     @GetMapping("{id}")
-    @Transactional
     public ResponseEntity<EmployeeDTO> getEmployee(HttpServletRequest request, @PathVariable("id") Long id) {
-        Employee supervisor = employeeRepository.findById(id).get();
-        employeeRepository.findAllBySupervisor(supervisor).forEach(employee -> {
-            employee.supervisor = null;
-            employeeRepository.save(employee);
-        });
         return ResponseEntity.ok(employeeMapper.toDTO(employeeRepository.findById(id).get()));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("{id}")
+    @Transactional
     public void deleteEmployee(HttpServletRequest request, @PathVariable("id") Long id) {
+        Employee supervisor = employeeRepository.findById(id).get();
+        employeeRepository.findAllBySupervisor(supervisor).forEach(employee -> {
+            employee.supervisor = null;
+            employeeRepository.save(employee);
+        });
         employeeRepository.deleteById(id);
     }
 
