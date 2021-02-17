@@ -2,10 +2,6 @@ package si.najemnina.main.api.user;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import si.najemnina.main.api.realestate.RealEstate;
-import si.najemnina.main.api.realestate.realestate_unit.RealEstateUnit;
-import si.najemnina.main.api.realestate.realestate_unit.rent.Rent;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,24 +21,6 @@ public class User implements UserDetails {
     public String password;
 
     public Role role;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "real_estate_units_users",
-            joinColumns = @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "real_estate_unit_id", nullable = false, referencedColumnName = "id"))
-    public Collection<RealEstateUnit> usedRealEstateUnits;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    public Collection<RealEstate> ownedRealEstates;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    public Collection<RealEstateUnit> rentedRealEstateUnits;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    public Collection<Rent> rents;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    public Collection<Rent> rentsOwned;
 
     public enum Role implements GrantedAuthority {
         USER, ADMIN;
